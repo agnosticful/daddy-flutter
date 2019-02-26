@@ -22,6 +22,14 @@ class _FakeNecessityList implements NecessityList {
   final List<Necessity> necessities;
 
   @override
+  int indexOf(Necessity necessity) => necessities.indexOf(necessity);
+
+  @override
+  NecessityList insert(int index, Necessity necessity) => _FakeNecessityList(
+        necessities: List.from(necessities)..insert(index, necessity),
+      );
+
+  @override
   NecessityList delete(Necessity necessity) => _FakeNecessityList(
         necessities: necessities.where((n) => n != necessity).toList(),
       );

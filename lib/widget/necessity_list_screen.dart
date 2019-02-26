@@ -52,9 +52,13 @@ class _NecessityListScreenState extends State<NecessityListScreen> {
                               necessity: _necessityList.necessities[i ~/ 2],
                               onTap: () {},
                               onDone: () => _onNecessityDone(
-                                  _necessityList.necessities[i ~/ 2]),
+                                    context,
+                                    _necessityList.necessities[i ~/ 2],
+                                  ),
                               onDeleted: () => _onNecessityDeleted(
-                                  _necessityList.necessities[i ~/ 2]),
+                                    context,
+                                    _necessityList.necessities[i ~/ 2],
+                                  ),
                             )
                           : Divider(
                               key: Key("div$i"),
@@ -68,20 +72,46 @@ class _NecessityListScreenState extends State<NecessityListScreen> {
         ),
       );
 
-  void _onNecessityDone(Necessity necessity) {
-    print('done: ${necessity.name}');
+  void _onNecessityDone(BuildContext context, Necessity necessity) {
+    int necessityIndex = _necessityList.indexOf(necessity);
 
     setState(() {
       _necessityList = _necessityList.delete(necessity);
     });
+
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Marked an item "${necessity.name}" done.'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () => setState(() {
+                _necessityList =
+                    _necessityList.insert(necessityIndex, necessity);
+              }),
+        ),
+      ),
+    );
   }
 
-  void _onNecessityDeleted(Necessity necessity) {
-    print('deleted: ${necessity.name}');
+  void _onNecessityDeleted(BuildContext context, Necessity necessity) {
+    int necessityIndex = _necessityList.indexOf(necessity);
 
     setState(() {
       _necessityList = _necessityList.delete(necessity);
     });
+
+    Scaffold.of(context).showSnackBar(
+      SnackBar(
+        content: Text('Deleted an item "${necessity.name}".'),
+        action: SnackBarAction(
+          label: 'Undo',
+          onPressed: () => setState(() {
+                _necessityList =
+                    _necessityList.insert(necessityIndex, necessity);
+              }),
+        ),
+      ),
+    );
   }
 }
 
