@@ -81,7 +81,12 @@ class _NecessityListScreenState extends State<NecessityListScreen> {
 
     Scaffold.of(context).showSnackBar(
       SnackBar(
-        content: Text('Marked an item "${necessity.name}" done.'),
+        content: Text(
+          'Marked an item "${necessity.name}" done.',
+          style: TextStyle(
+            fontFamily: 'Rubik',
+          ),
+        ),
         action: SnackBarAction(
           label: 'Undo',
           onPressed: () => setState(() {
@@ -102,7 +107,12 @@ class _NecessityListScreenState extends State<NecessityListScreen> {
 
     Scaffold.of(context).showSnackBar(
       SnackBar(
-        content: Text('Deleted an item "${necessity.name}".'),
+        content: Text(
+          'Deleted an item "${necessity.name}".',
+          style: TextStyle(
+            fontFamily: 'Rubik',
+          ),
+        ),
         action: SnackBarAction(
           label: 'Undo',
           onPressed: () => setState(() {
